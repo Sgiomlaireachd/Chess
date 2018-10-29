@@ -51,26 +51,32 @@ class Rook(Piece):
         if xchange > 0 and ychange == 0 or xchange == 0 and ychange > 0:
             if ychange > 0:
                 print("INSIDE!")
-                s = self.pos[0]
                 if changey < 0:
                     print("INSIDE_Y<0")
-                    for i in range(0, ychange):
+                    for i in range(0, ychange-1):
                         print("iter")
-                        s+= str(int(self.pos[1]) - i+1)
+                        s = self.pos[0]
+                        s+= str(int(self.pos[1]) - (i+1))
+                        print("s:", s)
+                        if isinstance(convertIndex(board, s), Piece):
+                            print("FALSE!")
+                            return False
                 else:
                     print("INSIDE_Y>0")
-                    for i in range(0, ychange):
+                    for i in range(0, ychange -1):
                         print("iter")
-                        s += str(int(self.pos[1]) + i+1)
-                    print("s:",s)
-                    if isinstance(convertIndex(board,s),Piece):
-                        print("FALSE!")
-                        return False
+                        s = self.pos[0]
+                        s += str(int(self.pos[1]) + (i+1))
+                        print("s:",s)
+                        print("object:",convertIndex(board,s))
+                        if isinstance(convertIndex(board,s),Piece):
+                            print("FALSE!")
+                            return False
             if xchange > 0:
                 print("ELSE!")
-                for i in range(0,xchange):
+                for i in range(0,xchange - 1):
                     if changex < 0:
-                        s = chr(ord(self.pos[0]) - i + 1)
+                        s = chr(ord(self.pos[0]) - (i + 1))
                     else:
                         s = chr(ord(self.pos[0]) + i + 1)
                     s+= self.pos[1]
@@ -96,32 +102,38 @@ class Bishop(Piece):
         xchange = abs(changex)
         ychange = abs(changey)
         print(changex, changey)
+        print(bool(changex), bool(changey))
         if xchange == ychange and xchange + ychange != 0:
-            if changex and changey:
-                for i in range(1, xchange ):
+            if changex > 0 and changey > 0:
+                for i in range(1, xchange - 1):
                     s = chr(ord(self.pos[0]) + i)
                     s += str(int(self.pos[1]) + i)
+                    print("+ +")
+                    print(s)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
-            if changex and not changey:
-                for i in range(1, xchange):
-                    s = chr(ord(self.pos[0]) + i)
-                    s += str(int(self.pos[1]) - i)
+            if changex > 0 and changey <= 0:
+                for i in range(1, xchange - 1):
+                    s = chr(ord(self.pos[0]) + i+1)
+                    s += str(int(self.pos[1]) - i-1)
+                    print("+ -")
                     print(s)
                     if isinstance(convertIndex(board,s), Piece):
                         print("FALSE!")
                         return False
-            if not changex and changey:
-                for i in range(1, xchange):
+            if changex <= 0 and changey > 0:
+                for i in range(1, xchange - 1):
                     s = chr(ord(self.pos[0]) - i)
                     s += str(int(self.pos[1]) + i)
+                    print("- +")
                     print(s)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
-            if not changex and not changey:
-                for i in range(0, xchange):
+            if changex <= 0 and changey <= 0:
+                for i in range(0, xchange - 1):
                     s = chr(ord(self.pos[0]) - i)
                     s += str(int(self.pos[1]) - i)
+                    print("- -")
                     print(s)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
@@ -163,25 +175,25 @@ class Queen(Piece):
         xchange = abs(changex)
         ychange = abs(changey)
         if (xchange == ychange and xchange + ychange != 0) or (xchange > 0 and ychange == 0 or xchange == 0 and ychange > 0):
-            if changex and changey:
+            if changex > 0 and changey > 0:
                 for i in range(1, xchange):
                     s = chr(ord(self.pos[0]) + i)
                     s += str(int(self.pos[1]) + i)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
-            if changex and not changey:
+            if changex > 0 and changey <= 0:
                 for i in range(1, xchange):
                     s = chr(ord(self.pos[0]) + i)
                     s += str(int(self.pos[1]) - i)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
-            if not changex and changey:
+            if changex <= 0 and changey > 0:
                 for i in range(1, xchange):
                     s = chr(ord(self.pos[0]) - i)
                     s += str(int(self.pos[1]) + i)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
-            if not changex and not changey:
+            if changex <= 0 and changey <= 0:
                 for i in range(1, xchange):
                     s = chr(ord(self.pos[0]) - i)
                     s += str(int(self.pos[1]) - i)
