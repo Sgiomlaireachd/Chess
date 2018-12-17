@@ -130,7 +130,7 @@ class Bishop(Piece):
                     if isinstance(convertIndex(board,s), Piece):
                         return False
             if changex <= 0 and changey <= 0:
-                for i in range(0, xchange - 1):
+                for i in range(1, xchange - 1):
                     s = chr(ord(self.pos[0]) - i)
                     s += str(int(self.pos[1]) - i)
                     print("- -")
@@ -176,25 +176,25 @@ class Queen(Piece):
         ychange = abs(changey)
         if (xchange == ychange and xchange + ychange != 0) or (xchange > 0 and ychange == 0 or xchange == 0 and ychange > 0):
             if changex > 0 and changey > 0:
-                for i in range(1, xchange):
+                for i in range(1, xchange - 1):
                     s = chr(ord(self.pos[0]) + i)
                     s += str(int(self.pos[1]) + i)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
             if changex > 0 and changey <= 0:
-                for i in range(1, xchange):
+                for i in range(1, xchange - 1):
                     s = chr(ord(self.pos[0]) + i)
                     s += str(int(self.pos[1]) - i)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
             if changex <= 0 and changey > 0:
-                for i in range(1, xchange):
+                for i in range(1, xchange - 1):
                     s = chr(ord(self.pos[0]) - i)
                     s += str(int(self.pos[1]) + i)
                     if isinstance(convertIndex(board,s), Piece):
                         return False
             if changex <= 0 and changey <= 0:
-                for i in range(1, xchange):
+                for i in range(1, xchange - 1):
                     s = chr(ord(self.pos[0]) - i)
                     s += str(int(self.pos[1]) - i)
                     if isinstance(convertIndex(board,s), Piece):
